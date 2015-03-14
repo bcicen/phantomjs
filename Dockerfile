@@ -36,5 +36,4 @@ RUN cd /tmp && \
 RUN rm -rf /tmp/* && \
     apt-get clean
 
-ENTRYPOINT "phantomjs"
-CMD ["--help"]
+ENTRYPOINT [ "phantomjs" ]
