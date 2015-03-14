@@ -22,7 +22,8 @@ RUN apt-get -yqq update && \
                         libfreetype6 \
                         libssl-dev \
                         libpng-dev \
-                        libjpeg-dev
+                        libjpeg-dev && \
+    apt-get clean
 
 #build
 RUN cd /tmp && \
@@ -30,10 +31,8 @@ RUN cd /tmp && \
     cd phantomjs/ && \
     git checkout $PHANTOMJS_VERSION && \
     echo y | ./build.sh && \
-    mv -v bin/phantomjs /usr/bin/
-
-#cleanup
-RUN rm -rf /tmp/* && \
-    apt-get clean
+    mv -v bin/phantomjs /usr/bin/ && \
+    #cleanup
+    rm -rf /tmp/*
 
 ENTRYPOINT [ "phantomjs" ]
