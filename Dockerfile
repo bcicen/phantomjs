@@ -15,6 +15,7 @@ RUN apt-get -yqq update && \
                         gperf \
                         ruby \
                         perl \
+                        python \
                         libsqlite3-dev \
                         libfontconfig1-dev \
                         libicu-dev \
