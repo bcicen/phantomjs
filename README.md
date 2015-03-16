@@ -7,7 +7,7 @@ A Docker image build of PhantomJS from source
 docker run -ti bcicen/phantomjs:latest --help
 ```
 
-or if you prefer to build the image yourself:
+or if you prefer to build the image yourself(this may take an extremely long time):
 ```bash
 git clone https://github.com/bcicen-docker/phantomjs.git
 cd phantomjs/
