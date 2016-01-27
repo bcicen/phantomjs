@@ -1,14 +1,38 @@
 #PhantomJS
 
-FROM alpine:latest
+FROM ubuntu:latest
 MAINTAINER Bradley Cicenas <bradley.cicenas@gmail.com>
 
-ENV PHANTOMJS_VERSION 2.1.1
+ENV PHANTOMJS_VERSION 2.0
 
-RUN apk --update add bash tar bzip2 fontconfig ca-certificates && \
-    rm -f /var/cache/apk/*
+#prereqs
+RUN apt-get -yqq update && \
+    apt-get install -yq git \
+                        build-essential \
+                        g++ \
+                        flex \
+                        bison \
+                        gperf \
+                        ruby \
+                        perl \
+                        python \
+                        libsqlite3-dev \
+                        libfontconfig1-dev \
+                        libicu-dev \
+                        libfreetype6 \
+                        libssl-dev \
+                        libpng-dev \
+                        libjpeg-dev && \
+    apt-get clean
 
-RUN wget -q https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${PHANTOMJS_VERSION}-linux-x86_64.tar.bz2 -O - \
-    | tar -xjC /tmp/ && \
-    mv /tmp/phantomjs*/bin/phantomjs /usr/bin/ && \
+#build
+RUN cd /tmp && \
+    git clone git://github.com/ariya/phantomjs.git && \
+    cd phantomjs/ && \
+    git checkout $PHANTOMJS_VERSION && \
+    echo y | ./build.sh && \
+    mv -v bin/phantomjs /usr/bin/ && \
+    #cleanup
     rm -rf /tmp/*
+
+ENTRYPOINT [ "phantomjs" ]
